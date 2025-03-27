@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Aviation Terms Preprocessing API
+  description: API to preprocess aviation-related text by replacing out-of-vocabulary (OOV) terms using SQLite mappings.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /preprocess:
+    post:
+      summary: Preprocess a sentence by replacing OOV terms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sentence
+              properties:
+                sentence:
+                  type: string
+                  example: "I am going to TRZ."
+      responses:
+        '200':
+          description: Successfully processed sentence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  original:
+                    type: string
+                    example: "I am going to TRZ."
+                  processed:
+                    type: string
+                    example: "i am going to tiruchirappalli international airport."
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /add-term:
+    post:
+      summary: Add or update an OOV term mapping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - oov_term
+                - replacement
+              properties:
+                oov_term:
+                  type: string
+                  example: ailerons
+                replacement:
+                  type: string
+                  example: wing flaps
+      responses:
+        '200':
+          description: Term successfully added or updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Term added successfully
+                  term:
+                    type: string
+                    example: ailerons
+                  replacement:
+                    type: string
+                    example: wing flaps
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '409':
+          description: Term already exists with a different mapping
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Failed to add term
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

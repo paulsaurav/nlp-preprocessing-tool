@@ -1,0 +1,19 @@
+{
+  "name": "preprocessing-svc",
+  "version": "1.0.0",
+  "description": "preprocessing tool for open nmt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Saurav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7",
+    "swagger-ui-express": "^5.0.1",
+    "xlsx": "^0.18.5",
+    "yamljs": "^0.3.0"
+  }
+}
